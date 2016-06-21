@@ -37,13 +37,13 @@ RUN buildDeps=" \
 	&& cd /usr/src/lz4 \
 	&& make -j"$(nproc)" \
 	&& make install \
-	&& curl -SL ftp://ftp.freeradius.org/pub/freeradius/freeradius-client-1.1.7.tar.gz -o freeradius-client-1.1.7.tar.gz \
+	&& curl -SL "ftp://ftp.freeradius.org/pub/freeradius/freeradius-client-1.1.7.tar.gz" -o freeradius-client-1.1.7.tar.gz \
 	&& mkdir -p /usr/src/freeradius-client \
 	&& tar -xzf freeradius-client-1.1.7.tar.gz -C /usr/src/freeradius-client --strip-components=1 \
 	&& rm freeradius-client-1.1.7.tar.gz \
 	&& cd /usr/src/freeradius-client-1.1.7 \
 	&& ./configure --prefix=/usr/local \
-	&& make -j"$(nproc)"
+	&& make -j"$(nproc)" \
 	&& make install \
 	&& OC_VERSION=`curl "http://www.infradead.org/ocserv/download.html" | sed -n 's/^.*version is <b>\(.*$\)/\1/p'` \
 	&& curl -SL "ftp://ftp.infradead.org/pub/ocserv/ocserv-$OC_VERSION.tar.xz" -o ocserv.tar.xz \
