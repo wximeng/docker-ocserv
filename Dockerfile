@@ -62,6 +62,7 @@ RUN buildDeps=" \
 	&& cd / \
 	&& rm -fr /usr/src/lz4 \
 	&& rm -fr /usr/src/ocserv \
+	&& rm -fr /usr/src/freeradius-client \
 	&& apt-get purge -y --auto-remove $buildDeps
 
 # Setup config
