@@ -37,11 +37,11 @@ RUN buildDeps=" \
 	&& cd /usr/src/lz4 \
 	&& make -j"$(nproc)" \
 	&& make install \
-	&& curl -SL "ftp://ftp.freeradius.org/pub/freeradius/freeradius-client-1.1.7.tar.gz" -o freeradius-client-1.1.7.tar.gz \
+	&& curl -SL "ftp://ftp.freeradius.org/pub/freeradius/freeradius-client-1.1.7.tar.gz" -o freeradius-client.tar.gz \
 	&& mkdir -p /usr/src/freeradius-client \
-	&& tar -xzf freeradius-client-1.1.7.tar.gz -C /usr/src/freeradius-client --strip-components=1 \
-	&& rm freeradius-client-1.1.7.tar.gz \
-	&& cd /usr/src/freeradius-client-1.1.7 \
+	&& tar -xzf freeradius-client.tar.gz -C /usr/src/freeradius-client --strip-components=1 \
+	&& rm freeradius-client.tar.gz \
+	&& cd /usr/src/freeradius-client \
 	&& ./configure --prefix=/usr/local \
 	&& make -j"$(nproc)" \
 	&& make install \
