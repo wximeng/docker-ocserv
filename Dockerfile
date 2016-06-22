@@ -77,7 +77,7 @@ RUN set -x \
 	&& sed -i '/sample\.passwd/s/^/#/g' /etc/ocserv/ocserv.conf
 	&& sed -i 's/^\#auth = \"radius.*/auth = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf,groupconfig=true\]\"/g' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#acct = \"radius.*/acct = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf\]\"/g' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/^\#listen-host.*/listen-host = 192.168.0.10/g' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/^\#listen-host.*/listen-host = 98.126.107.18/g' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/max-clients = 16/#max-clients = 16/g' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/max-same-clients = 2/#max-same-clients = 2/g' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/443/4433/g' /etc/ocserv/ocserv.conf \
