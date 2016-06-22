@@ -80,10 +80,10 @@ RUN set -x \
 	&& sed -i '/sample\.passwd/s/^/#/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#auth = \"radius.*/auth = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf,groupconfig=true,nas-identifier=ocserv1\]\"/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#acct = \"radius.*/acct = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf\]\"/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/^authserver.*/authserver 98.126.107.18:1812/' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& sed -i 's/^acctserver.*/acctserver 98.126.107.18:1813/' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& sed -i '/radius_deadtime.*/s/^#//' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/servers \
+
+
+
+
 	&& mv /usr/local/etc/radiusclient/dictionary /usr/local/etc/radiusclient/dictionary.old \
 	&& cat /tmp/route.txt >> /etc/ocserv/ocserv.conf \
 	&& rm -fr /tmp/route.txt
