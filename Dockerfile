@@ -59,8 +59,6 @@ RUN buildDeps=" \
 	&& make install \
 	&& mkdir -p /etc/ocserv \
 	&& cp /usr/src/ocserv/doc/sample.config /etc/ocserv/ocserv.conf \
-	&& curl -SL "https://raw.githubusercontent.com/wximeng/docker-ocserv/master/radius-dictionary" -o dictionary \
-	&& cp dictionary /usr/src/. \
 	&& cd / \
 	&& rm -fr /usr/src/lz4 \
 	&& rm -fr /usr/src/ocserv \
@@ -80,19 +78,20 @@ RUN set -x \
 	&& sed -i 's/^route/#route/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^no-route/#no-route/' /etc/ocserv/ocserv.conf \
 	&& sed -i '/sample\.passwd/s/^/#/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/^\#auth = \"radius.*/auth = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf,groupconfig=true\]\"/' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/^\#auth = \"radius.*/auth = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf,groupconfig=true,nas-identifier=ocserv1\]\"/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#acct = \"radius.*/acct = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf\]\"/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^authserver.*/authserver 98.126.107.18:1812/' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i 's/^acctserver.*/acctserver 98.126.107.18:1813/' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i '/radius_deadtime.*/s/^#//' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& cp /usr/src/dictionary /usr/local/etc/radiusclient/. \
+	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/servers \
+	&& mv /usr/local/etc/radiusclient/dictionary /usr/local/etc/radiusclient/dictionary.old \
 	&& cat /tmp/route.txt >> /etc/ocserv/ocserv.conf \
 	&& rm -fr /tmp/route.txt
 
 WORKDIR /etc/ocserv
 
 COPY docker-entrypoint.sh /entrypoint.sh
+COPY radius-dictionary /usr/local/etc/radiusclient/dictionary
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 4433
