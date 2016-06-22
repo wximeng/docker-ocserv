@@ -68,8 +68,11 @@ RUN buildDeps=" \
 # Setup config
 COPY route.txt /tmp/
 RUN set -x \
+	&& sed -i 's/443/4433/g' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\.\.\/tests/\/etc\/ocserv/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/#\(compression.*\)/\1/' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/max-clients = 16/#max-clients = 16/' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/max-same-clients = 2/#max-same-clients = 2/' /etc/ocserv/ocserv.conf \
 	&& sed -i '/^ipv4-network = /{s/192.168.1.0/10.99.99.0/}' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/192.168.1.2/8.8.8.8/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^route/#route/' /etc/ocserv/ocserv.conf \
@@ -77,9 +80,9 @@ RUN set -x \
 	&& sed -i '/sample\.passwd/s/^/#/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#auth = \"radius.*/auth = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf,groupconfig=true\]\"/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^\#acct = \"radius.*/acct = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf\]\"/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/max-clients = 16/#max-clients = 16/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/max-same-clients = 2/#max-same-clients = 2/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/443/4433/g' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/^authserver.*/authserver 98.126.107.18:1812/' /usr/local/etc/radiusclient/radiusclient.conf \
+	&& sed -i 's/^acctserver.*/acctserver 98.126.107.18:1813/' /usr/local/etc/radiusclient/radiusclient.conf \
+	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& cat /tmp/route.txt >> /etc/ocserv/ocserv.conf \
 	&& rm -fr /tmp/route.txt
 
