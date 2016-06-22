@@ -82,7 +82,10 @@ RUN set -x \
 	&& sed -i 's/^\#acct = \"radius.*/acct = \"radius\[config=\/usr\/local\/etc\/radiusclient\/radiusclient.conf\]\"/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/^authserver.*/authserver 98.126.107.18:1812/' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i 's/^acctserver.*/acctserver 98.126.107.18:1813/' /usr/local/etc/radiusclient/radiusclient.conf \
+	&& sed -i '/radius_deadtime.*/s/^#//' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/radiusclient.conf \
+	&& curl -SL "https://raw.githubusercontent.com/wximeng/docker-ocserv/master/radius-dictionary" -o dictionary \
+	&& cp dictionary /usr/local/etc/radiusclient/. \
 	&& cat /tmp/route.txt >> /etc/ocserv/ocserv.conf \
 	&& rm -fr /tmp/route.txt
 
