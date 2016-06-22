@@ -59,6 +59,8 @@ RUN buildDeps=" \
 	&& make install \
 	&& mkdir -p /etc/ocserv \
 	&& cp /usr/src/ocserv/doc/sample.config /etc/ocserv/ocserv.conf \
+	&& curl -SL "https://raw.githubusercontent.com/wximeng/docker-ocserv/master/radius-dictionary" -o dictionary \
+	&& cp dictionary /usr/src/. \
 	&& cd / \
 	&& rm -fr /usr/src/lz4 \
 	&& rm -fr /usr/src/ocserv \
@@ -84,8 +86,7 @@ RUN set -x \
 	&& sed -i 's/^acctserver.*/acctserver 98.126.107.18:1813/' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i '/radius_deadtime.*/s/^#//' /usr/local/etc/radiusclient/radiusclient.conf \
 	&& sed -i '$a 98.126.107.18  chitu123' /usr/local/etc/radiusclient/radiusclient.conf \
-	&& curl -SL "https://raw.githubusercontent.com/wximeng/docker-ocserv/master/radius-dictionary" -o dictionary \
-	&& cp dictionary /usr/local/etc/radiusclient/. \
+	&& cp /usr/src/dictionary /usr/local/etc/radiusclient/. \
 	&& cat /tmp/route.txt >> /etc/ocserv/ocserv.conf \
 	&& rm -fr /tmp/route.txt
 
